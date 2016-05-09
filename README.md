@@ -14,3 +14,5 @@
 - 任务八：[响应式网格（栅格化）布局](http://ife.baidu.com/task/detail?taskId=8)
 - 任务九：[使用HTML/CSS实现一个复杂页面](http://ife.baidu.com/task/detail?taskId=9)
 - 任务十：[Flexbox 布局练习](http://ife.baidu.com/task/detail?taskId=10)
+- 任务十一：[移动Web页面布局实践](http://ife.baidu.com/task/detail?taskId=11)
+- 任务十二：[学习CSS 3的新特性](http://ife.baidu.com/task/detail?taskId=12)
