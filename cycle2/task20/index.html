@@ -16,6 +16,9 @@
             #container{
                 margin-top: 20px;
             }
+             #container .selected{
+                background-color: red;
+            }
         </style>
     </head>
     <body>
@@ -24,6 +27,8 @@
     <button type="button" id="rpushBtn">右侧入</button>
     <button type="button" id="lpopBtn">左侧出</button>
     <button type="button" id="rpopBtn">右侧出</button>
+    <input type="text" name="" value="" placeholder="" id="queryIn">
+    <button type="button" id="queryBtn">查询</button>
     <div id="container">
         
     </div>
@@ -45,6 +50,8 @@
             rpushBtn: document.getElementById("rpushBtn"),
             lpopBtn: document.getElementById("lpopBtn"),
             rpopBtn: document.getElementById("rpopBtn"),
+            queryIn:document.getElementById("queryIn"),
+            queryBtn: document.getElementById("queryBtn"),
             numShow: [],
             leftPush: function(num){
                 this.numShow.unshift(num);
@@ -102,8 +109,33 @@
                 return true;
             },
             getTextIn:function(){
-                var arr = this.textIn.value.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/);
+                //在非数字字母汉字处切分，并过滤掉空字符串
+                var arr = this.textIn.value.split(/[^0-9a-zA-Z\u4e00-\u9fa5]+/).filter(function(index) {
+                    return index != "";
+                });
                 return arr;
+            },
+            queryText:function(){
+                var match = this.queryIn.value;
+                if (match!=null && match.length >0) {
+                    var reg = new RegExp(match,"g");
+                    var str = "";
+                    for (var i = 0; i < this.numShow.length; i++) {
+                            //用正则或者indexOf模糊判断
+
+                            // if (reg.test(this.numShow[i])) {
+                            //     str += ("<div class='selected'>" + this.numShow[i] + "</div>");
+                            // } else{
+                            //     str += ("<div>" + this.numShow[i] + "</div>");
+                            // }
+                            if (this.numShow[i].indexOf(match) != -1) {
+                                str += ("<div class='selected'>" + this.numShow[i] + "</div>");
+                            } else{
+                                str += ("<div>" + this.numShow[i] + "</div>");
+                            }
+                    }
+                    this.container.innerHTML = str;
+                }
             },
             bindEvent:function(){
                 var self = this;
@@ -118,8 +150,13 @@
                     }
                 });
                 addEvent(self.rpushBtn,"click",function(){
-                    if (self.verificate()) {
-                        self.rightPush(self.textIn.value);
+                    var textArr = self.getTextIn();
+                    console.log(textArr.length);
+                    if (textArr.length != 0) {
+                        console.log(textArr);
+                        textArr.map(function(x){
+                            self.rightPush(x);
+                        });
                     }
                 });
                 addEvent(self.lpopBtn,"click",function(){
@@ -127,6 +164,9 @@
                 });
                 addEvent(self.rpopBtn,"click",function(){
                     self.rightPop();
+                });
+                addEvent(self.queryBtn,"click",function(){
+                    self.queryText();
                 });
             },
             init:function(){
