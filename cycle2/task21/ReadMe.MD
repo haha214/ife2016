@@ -17,6 +17,8 @@
 - 每个爱好内容需要做trim处理
 - 最多允许10个兴趣爱好，多于10个时，按照录入的先后顺序，把最前面的删掉
 
+##Demo地址
+[Demo](http://haha214.github.io/ife2016/cycle2/task21/index.html)
 ##在线学习参考资料
 - [JavaScript入门篇](http://www.imooc.com/view/36)
 - [MDN JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
