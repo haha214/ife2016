@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Task20</title>
+        <style type="text/css" media="screen">
+            #tagContainer span{
+                background-color: orange;
+                padding: 10px;
+                margin-right: 10px;
+                color:#fff;
+                display: inline-block;
+            }
+            #tagContainer .selected{
+                background-color: yellow;
+                color:red;
+            }
+            #tagContainer{
+                min-height: 40px;
+                margin: 10px 0;
+            }
+            #textContainer span{
+                display:inline-block;
+                background-color: purple;
+                color:#ccc;
+                padding:10px;
+                margin-right: 10px;
+            }
+        </style>
+    </head>
+    <body>
+    <div>
+      Tag:<input type="text" name="" value="" placeholder="" id="tagIn"> 
+        <div id="tagContainer">
+        
+        </div>
+    </div>
+    <div>
+        <textarea id="textIn"></textarea>
+        <button id="textBtn">兴趣爱好</button>
+        <div id="textContainer">
+            
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        //事件处理
+        function addEvent(element,event,listener){
+            if (element.addEventListener) {
+                element.addEventListener(event, listener);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + event,listener);
+            } else{
+                element["on" + event] = listener;
+            }
+        }
+        function addEventUtil(element,event,tag,handler,obj){
+            addEvent(element,event,function(e){
+                var e = e || window.e;
+                var target = e.target || e.srcElement;
+                if (target && target.tagName ===  tag.toUpperCase()) {
+                    //handler(target);
+                    handler.call(obj,target);
+                }
+            });
+        }
+        function Queue(container){
+            this.container = container;
+            this.numShow = [];
+        }
+        Queue.prototype = {
+            constructor: Queue,
+            paint: function(){
+                var str = "";
+                for (var i = 0; i < this.numShow.length; i++) {
+                    str += ("<span>" + this.numShow[i] + "</span>");
+                }
+                this.container.innerHTML = str;
+            },
+            deleteNum : function(cur){
+                var id = this.numShow.indexOf(cur.innerHTML.replace(/^删除：/,""));
+                console.log(id);
+                this.numShow.splice(id,1);
+                this.paint();
+            },
+            addDelete: function(cur){
+                var classVal;
+                if (cur.getAttribute("class")) {
+                    classVal = cur.getAttribute("class") + " selected";
+                } else{
+                    classVal = "selected";
+                }
+                cur.setAttribute("class", classVal);
+                cur.innerHTML = "删除：" + cur.innerHTML;
+            },
+            delDelete:function(cur){
+                var reg = /\bselected\b/;
+                var classVal = cur.getAttribute("class");
+                classVal = classVal.replace(reg,"").replace(/^\s+|\s$/g,"").replace(/\s+/g," ");
+                if (classVal) {
+                    cur.setAttribute("class",classVal);
+                }else{
+                    cur.removeAttribute('class');
+                }
+                cur.innerHTML = cur.innerHTML.replace(/^删除：/,"");
+            },
+            addContent: function(num,val){
+                if (this.numShow.indexOf(val) === -1) {
+                    this.numShow.push(val);
+                    if (this.numShow.length > num) {
+                        this.numShow.shift();
+                    } 
+                    this.paint();
+                }
+            }
+        }
+       var init = function(){
+            var tagContainer = document.getElementById("tagContainer");
+            var textContainer = document.getElementById("textContainer");
+            var tagIn = document.getElementById("tagIn");
+            var textIn = document.getElementById("textIn");
+            var textBtn = document.getElementById("textBtn");
+
+            var tagQueue = new Queue(tagContainer);
+            var textQueue = new Queue(textContainer);
+
+            addEventUtil(tagContainer,"mouseover","span",tagQueue.addDelete);
+            addEventUtil(tagContainer,"mouseout","span",tagQueue.delDelete);
+            addEventUtil(tagContainer,"click","span",tagQueue.deleteNum,tagQueue);
+
+            addEvent(tagIn,"keyup",function(event){
+                var reg = /[,，\s]+/;
+                if (reg.test(tagIn.value) || event.keyCode === 13) {
+                    var handlerData = tagIn.value.trim().split(reg);
+                    var data = handlerData[0];
+                    if (data) {
+                        tagQueue.addContent(10,data);
+                    }
+                    tagIn.value = "";
+                }
+            });
+            addEvent(textBtn,"click",function(){
+                var reg = /[,，、\s]+/;
+                var arr = textIn.value.split(reg).filter(function(index) {
+                    return index != "";
+                });
+                if (arr.length != 0) {
+                    arr.map(function(index) {
+                        textQueue.addContent(10,index.trim());
+                    })
+                }
+                textIn.value = "";
+            });
+       }
+        init();
+    </script>
+    </body>
+</html>
