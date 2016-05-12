@@ -43,6 +43,7 @@
 - 任务十八：[基础JavaScript练习（一），难度简单。实现一个基本队列的相关操作](http://ife.baidu.com/task/detail?taskId=18)
 - 任务十九：[基础JavaScript练习（二），难度简单。丰富队列操作，实现一个排序算法的可视化呈现](http://ife.baidu.com/task/detail?taskId=19)
 - 任务二十：[基础JavaScript练习（三），难度简单。实践字符串、数组相关方法](http://ife.baidu.com/task/detail?taskId=20)
+- 任务二十一：[基础JavaScript练习（四），难度简单。结合实际运用场景，综合练习十八到二十的学习内容](http://ife.baidu.com/task/detail?taskId=21)
 
 <br>
 ###Demo地址如下：
@@ -54,3 +55,4 @@
 - 任务十八：[基础JavaScript练习（一），难度简单。实现一个基本队列的相关操作](http://haha214.github.io/ife2016/cycle2/task18/task18.html)
 - 任务十九：[基础JavaScript练习（二），难度简单。丰富队列操作，实现一个排序算法的可视化呈现](http://haha214.github.io/ife2016/cycle2/task19/task19.html)
 - 任务二十：[基础JavaScript练习（三），难度简单。实践字符串、数组相关方法](http://haha214.github.io/ife2016/cycle2/task20/index.html)
+- 任务二十一：[基础JavaScript练习（四），难度简单。结合实际运用场景，综合练习十八到二十的学习内容](http://haha214.github.io/ife2016/cycle2/task21/index.html)
