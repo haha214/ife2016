@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>task22</title>
+        <style type="text/css" media="screen">
+            *{
+                box-sizing: border-box;
+                padding:20px;
+            }
+            .root{
+                display: flex;
+                border:1px solid black;
+                width: 1000px;
+                margin:100px auto;
+                height: 300px;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+            .node1{
+                display:flex;
+                border:1px red solid;
+                width:450px;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+            .node2{
+                display:flex;
+                border:1px solid green;
+                width:170px;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+            .node3{
+                display:flex;
+                border:1px solid blue;
+                width:35px;
+                justify-content: space-between;
+                align-items: stretch;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="root">
+        <div class="node1">
+            <div class="node2">
+                <div class="node3">
+                    
+                </div>
+                <div class="node3">
+                    
+                </div>
+            </div>
+            <div class="node2">
+                <div class="node3">
+                    
+                </div>
+                <div class="node3">
+                    
+                </div>
+            </div>
+        </div>
+        <div class="node1">
+            <div class="node2">
+                <div class="node3">
+                    
+                </div>
+                <div class="node3">
+                    
+                </div>
+            </div>
+            <div class="node2">
+                <div class="node3">
+                    
+                </div>
+                <div class="node3">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+      <button id="preBtn">前</button>
+      <button id="inBtn">中</button>
+      <button id="postBtn">后</button>
+      <script>
+           //事件处理
+        function addEvent(element,event,listener){
+            if (element.addEventListener) {
+                element.addEventListener(event, listener);
+            } else if (element.attachEvent) {
+                element.attachEvent("on" + event,listener);
+            } else{
+                element["on" + event] = listener;
+            }
+        }
+        function Tree(root){
+            this.nodeList = [];
+            this.root =root;
+            this.timer = null;
+            this.preBtn = document.getElementById("preBtn");
+            this.inBtn =  document.getElementById("inBtn");
+            this.postBtn = document.getElementById("postBtn");
+        }
+        Tree.prototype = {
+            constructor: Tree,
+            preOrder: function(node){
+                var self = this;
+                if (node!= null) {
+                    self.nodeList.push(node);
+                    self.preOrder(node.firstElementChild);
+                    self.preOrder(node.lastElementChild);
+                }
+            },
+            inOrder:function(node){
+                var self = this;
+                if (node!= null) {
+                    self.inOrder(node.firstElementChild);
+                    self.nodeList.push(node);
+                    self.inOrder(node.lastElementChild);
+                }
+            },
+            postOrder:function(node){
+                var self = this;
+                if (node!= null) {
+                    self.postOrder(node.firstElementChild);
+                    self.postOrder(node.lastElementChild);
+                    self.nodeList.push(node);
+                }
+            },
+            render:function(){
+                var i = 0;
+                var self = this;
+                var len = self.nodeList.length;
+                self.nodeList[i].style.backgroundColor = "orange";
+                self.timer = setInterval(function(){
+                    i++;
+                    if (i<len) {
+                        self.nodeList[i-1].style.backgroundColor = "#fff";
+                        self.nodeList[i].style.backgroundColor = "orange";
+                    } else{
+                        clearInterval(self.timer);
+                        self.nodeList[i-1].style.backgroundColor = "#fff";
+                    }
+                },500);
+            },
+            reset:function(){                
+                clearInterval(this.timer);
+                this.nodeList.map(function(node){
+                    node.style.backgroundColor = "#fff";
+                });
+                this.nodeList = [];
+            },
+            bindEvent:function(){
+                var self = this;
+                addEvent(self.preBtn,"click",function(){
+                    self.reset();
+                    self.preOrder(self.root);
+                    self.render();
+                });
+                addEvent(self.inBtn,"click",function(){
+                    self.reset();
+                    self.inOrder(self.root);
+                    self.render();
+                });
+                addEvent(self.postBtn,"click",function(){
+                    self.reset();
+                    self.postOrder(self.root);
+                    self.render();
+                });
+            },
+            init:function(){
+                this.bindEvent();
+            }
+        }
+        function init(){
+            var rootNode = document.getElementsByClassName("root")[0];
+            var tree = new Tree(rootNode);
+            tree.init();
+        }
+        init();
+      </script>
+    </body>
+</html>
