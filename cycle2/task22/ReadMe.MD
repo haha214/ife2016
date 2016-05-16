@@ -9,6 +9,9 @@
 - 当前被遍历到的节点做一个特殊显示（比如不同的颜色）
 - 每隔一段时间（500ms，1s等时间自定）再遍历下一个节点
 
+##Demo
+[Demo](http://haha214.github.io/ife2016/cycle2/task22/index.html)
+
 ##在线学习参考资料
 - [JavaScript入门篇](http://www.imooc.com/view/36)
 - [MDN JavaScript](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript)
